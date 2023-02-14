@@ -1,0 +1,49 @@
+body {
+    background-color: #b3b3b3;
+}
+
+.wrapper {
+    margin: 70px auto;
+    padding: 30px 30px;
+    width: 350px;
+    background-color: #fff;
+    border-radius: 20px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 23px;
+}
+
+h2 {
+    font-size: 17px;
+    color: #3b9d30;
+}
+
+span {
+    display: inline-block;
+    margin: 0;
+    font-size: 17px;
+    color: #956db7;
+}
+
+.choise {
+    display: block;
+}
+
+.choise option:first-child {
+    display: none;
+}
+
+.button {
+    padding: 5px 10px;
+    border: 1px solid #000;
+    text-decoration: none;
+    color: #000;
+    background-color: #e5e0e0;
+    border-radius: 3px;
+}
+
+.button:hover {
+    background-color: #cfcccc;
+}
