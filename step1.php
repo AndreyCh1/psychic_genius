@@ -9,7 +9,7 @@
 <body>
     <div class="wrapper">
         <h1>Гра "Екстрасенс"</h1>
-        <form method="post" action="step2.php">
+        <form method="post" action="step1.php">
             <?php
                 session_start();
                 $submit = 0;
