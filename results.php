@@ -12,41 +12,40 @@
         <form method="post" action="">
             <?php
                 session_start();
-                $r = $_POST["results"];
-                echo ("<p>");
-                    var_dump($r);
-                echo ("</p>");
+                // session_destroy();
                 $password = $_SESSION["password"];
                 $stats = $_SESSION["stats"];
                 $generalStats = ["Ви Оракул!", "Ви Суперекстрасенс!", "Ви Eрекстрасенс!", "Ви майже Екстрасенс.", "Ви не Екстрасенс, співчуваємо."];
-
-                $achievement = "";
-                if (isset($_POST["results"])) {
-                    echo ("труляля");
-                    if (isset($_SESSION["lastGameStatistics"])) {
-                        $lastGameStatistics = $_SESSION["lastGameStatistics"];
-                        echo ("<h2>Прошлые достижения:</h2>");
-                        foreach ($lastGameStatistics as $achiev) {
-                            echo ("<div class='last_achivements'><p><h3><span>" . $achiev . "</span></h3></p></div>");
+                if (! empty($_SESSION["stats"])) {
+                    $achievement = "";
+                }
+                if (isset($_SESSION["lastGameStatistics"])) {
+                    $lastGameStatistics = $_SESSION["lastGameStatistics"];
+                    echo ("<h2>Прошлые достижения:</h2>");
+                    foreach ($lastGameStatistics as $achiev) {
+                        echo ("<p><h3><span>" . $achiev . "</span></h3></p>");
+                    }
+                    echo ("<hr>");
+                    $_SESSION["lastGameStatistics"] = $lastGameStatistics;
+                } else {
+                    $lastGameStatistics = [];
+                }
+                if (! empty($_SESSION["stats"])) {
+                    echo ("<h2>Результат гри:</h2>");
+                    if (isset($_POST["choise"])) {
+                        $choise = $_POST["choise"];
+                        if ($password == $choise) {
+                            echo ("<h2>Правильно, ви вгадали!</h2>");
+                            if (! empty($_SESSION["stats"])) {
+                                $stats['countWins'] = 4;
+                            }
+                        } else {
+                            echo ("<h2>Невірно, ви не вгадали!</h2>");
+                            if (! empty($_SESSION["stats"])) {
+                                $stats['countWins'] = 1;
+                            }
                         }
-                        echo ("<hr>");
-                        $_SESSION["lastGameStatistics"] = $lastGameStatistics;
-                    } else {
-                        $lastGameStatistics = [];
                     }
-                }
-                if (isset($_POST["choise"])) {
-                    $choise = $_POST["choise"];
-                    if ($password == $choise) {
-                        echo ("<h2>Правильно, ви вгадали!</h2>");
-                        $stats['countWins'] = 4;
-                    } else {
-                        echo ("<h2>Невірно, ви не вгадали!</h2>");
-                        $stats['countWins'] = 1;
-                    }
-                }
-                if (isset($_POST["results"])) {
-                    echo ("труляля");
                     if ($stats["rangeWins"] == true && $stats['countWins'] == 2) {
                         echo ("<p><h3><span>Ви Оракул!</span></h3></p>");
                         $achievement = $generalStats[0];
@@ -63,12 +62,12 @@
                         echo ("<p><h3><span>Ви не Екстрасенс, співчуваємо.</span></h3></p>");
                         $achievement = $generalStats[4];
                     }
+                    $stats = [];
+                    array_push($lastGameStatistics, $achievement);
                 }
-                // if (isset($lastGameStatistics))
-                // $lastGameStatistics = [];
-                header("Location: results.php");
-                array_push($lastGameStatistics, $achievement);
                 $_SESSION["lastGameStatistics"] = $lastGameStatistics;
+                // header("Location: results.php");
+                $_SESSION["stats"] = $stats;
                 echo ("<p><a class='button' href='index.php'>Почати спочатку</a></p>");
             ?>
         </form>

@@ -20,15 +20,15 @@ h2 {
     color: #3b9d30;
 }
 
+h3 {
+    text-indent: 10px;
+}
+
 span {
     display: inline-block;
     margin: 0;
     font-size: 17px;
     color: #956db7;
-}
-
-.last_achivements {
-    text-indent: 10px;
 }
 
 .choise {
