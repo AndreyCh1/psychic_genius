@@ -22,8 +22,8 @@
                 echo ("<p>Сгенирировано: $password</p>");
                 if ($password == $choise) {
                     echo ("<h2>Правильно, ви вгадали!</h2>");
-                    $stats['countWins'] = 2;
-                    echo ("<p><button class='button' type='submit'>Перейти до результатів</button></p>");
+                    $stats['countWins'] = 3;
+                    echo ("<p><button class='button' type='submit' name='results'>Перейти до результатів</button></p>");
                 } else {
                     if ($password < $choise) {
                         $direction = "менше";
@@ -31,7 +31,7 @@
                         $direction = "більше";
                     }
                     echo ("<h2>Невірно, даємо підказку, число <span>$direction</span> обраного.</h2>");
-                    $stats['countWins'] = 0;
+                    $stats['countWins'] = 1;
                     echo ("<select class='choise' name='choise' required placeholder=''>");
                         echo ("<option value='' selected disabled>Виберіть число</option>");
                         for ($i = $openingRange; $i <= $endOfRange; $i++) { // создаем 5 вариантов выбора

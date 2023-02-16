@@ -27,6 +27,10 @@ span {
     color: #956db7;
 }
 
+.last_achivements {
+    text-indent: 10px;
+}
+
 .choise {
     display: block;
 }
