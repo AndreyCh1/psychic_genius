@@ -31,13 +31,13 @@
                     }
                 }
                 $endOfRange = $openingRange + 9;
-                $stats = [];
+                $_SESSION["stats"] = [];
                 if ($openingRange == $choise) {
                     echo ("<h2>Ви вгадали діапазон, залишилось вгадати число:</h2>");
-                    $stats["rangeWins"] = true;
+                    $_SESSION["stats"]["rangeWins"] = true;
                 } else {
                     echo ("<h2>Невірно, вірний діапазон <span>$openingRange-$endOfRange</span>. Може вам вдасться вгадати число:</h2>");
-                    $stats["rangeWins"] = false;
+                    $_SESSION["stats"]["rangeWins"] = false;
                 }
                 echo ("<select class='choise' name='choise' required placeholder=''>");
                     echo ("<option value='' selected disabled>Виберіть число</option>");
@@ -46,7 +46,6 @@
                     }
                 echo ("</select>");
                 echo ("<input type='hidden' name='openingRange' value='$openingRange'>");
-                $_SESSION["stats"] = $stats;
                 echo ("<p><button class='button' type='submit'>Вибрати</button></p>");
             ?>
         </form>

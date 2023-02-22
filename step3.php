@@ -16,14 +16,12 @@
                 $openingRange = $_POST["openingRange"];
                 $endOfRange = $_POST["endOfRange"];
                 $password = $_SESSION["password"];
-                $stats = $_SESSION["stats"];
                 echo ("<input type='hidden' name='choise' value='$choise'>");
                 echo ("<p>Выбор: $choise</p>");
                 echo ("<p>Сгенирировано: $password</p>");
                 if ($password == $choise) {
-                    echo ("<h2>Правильно, ви вгадали!</h2>");
-                    $stats['countWins'] = 3;
-                    echo ("<p><button class='button' type='submit' name='results'>Перейти до результатів</button></p>");
+                    $_SESSION["stats"]["countWins"] = 2;
+                    header ("Location: results.php");
                 } else {
                     if ($password < $choise) {
                         $direction = "менше";
@@ -31,7 +29,7 @@
                         $direction = "більше";
                     }
                     echo ("<h2>Невірно, даємо підказку, число <span>$direction</span> обраного.</h2>");
-                    $stats['countWins'] = 1;
+                    $_SESSION["stats"]["countWins"] = 0;
                     echo ("<select class='choise' name='choise' required placeholder=''>");
                         echo ("<option value='' selected disabled>Виберіть число</option>");
                         for ($i = $openingRange; $i <= $endOfRange; $i++) { // создаем 5 вариантов выбора
@@ -41,7 +39,6 @@
                     echo ("<input type='hidden' name='openingRange' value='$openingRange'>");
                     echo ("<input type='hidden' name='endOfRange' value='$endOfRange'>");
                     echo ("<input type='hidden' name='direction' value='$direction'>");
-                    $_SESSION["stats"] = $stats;
                     echo ("<p><button class='button' type='submit'>Вибрати</button></p>");
                 }
             ?>

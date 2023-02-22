@@ -13,22 +13,15 @@
             session_start();
             $choise = $_POST["choise"];
             $password = $_SESSION["password"];
-            $stats = $_SESSION["stats"];
-            if ($password == $choise) {
-                $page = "results.php";
-            } else {
-                $page = "step3.php";
-            }
         ?>
-        <form method="post" action="<?= $page ?>">
+        <form method="post" action="step3.php">
             <?php
                 $openingRange = $_POST["openingRange"];
                 echo ("<p>Выбор: $choise</p>");
                 echo ("<p>Сгенирировано: $password</p>");
                 if ($password == $choise) {
-                    echo ("<h2>Правильно, ви вгадали!</h2>");
-                    $stats['countWins'] = 2;
-                    echo ("<p><button class='button' type='submit' name='results'>Перейти до результатів</button></p>");
+                    $_SESSION["stats"]["countWins"] = 1;
+                    header ("Location: results.php");
                 } else {
                     if (($openingRange + 4) >= $password) {
                         $endOfRange = $openingRange + 4;
@@ -37,7 +30,7 @@
                         $openingRange += 5;
                     }
                     echo ("<h2>Невірно, даємо підказку, число знаходиться в межах <span>$openingRange-$endOfRange</span>:</h2>");
-                    $stats['countWins'] = 1;
+                    $_SESSION["stats"]["countWins"] = 0;
                     echo ("<select class='choise' name='choise' required placeholder=''>");
                         echo ("<option value='' selected disabled>Виберіть число</option>");
                         for ($i = $openingRange; $i <= $endOfRange; $i++) { // создаем 5 вариантов выбора
@@ -48,7 +41,6 @@
                     echo ("<input type='hidden' name='endOfRange' value='$endOfRange'>");
                     echo ("<p><button class='button' type='submit'>Вибрати</button></p>");
                 }
-                $_SESSION["stats"] = $stats;
             ?>
         </form>
     </div>

@@ -39,8 +39,25 @@ span {
     display: none;
 }
 
+.high_achievement {
+    color: red;
+}
+
+.normal_achievement {
+    color: green;
+}
+
+.low_achievement {
+    color: blue;
+}
+
+.bottom_achievement {
+    color: black;
+}
+
 .button {
     padding: 5px 10px;
+    font-size: 15px;
     border: 1px solid #000;
     text-decoration: none;
     color: #000;
