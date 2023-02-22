@@ -30,7 +30,7 @@
                     }
                     echo ("<h2>Невірно, даємо підказку, число <span>$direction</span> обраного.</h2>");
                     $_SESSION["stats"]["countWins"] = 0;
-                    echo ("<select class='choise' name='choise' required placeholder=''>");
+                    echo ("<select class='choise' name='choise' required>");
                         echo ("<option value='' selected disabled>Виберіть число</option>");
                         for ($i = $openingRange; $i <= $endOfRange; $i++) { // создаем 5 вариантов выбора
                             echo ("<option value='". $i ."'>". $i ."</option>");

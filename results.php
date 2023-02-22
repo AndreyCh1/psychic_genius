@@ -13,13 +13,13 @@
             <?php
                 session_start();
                 if (isset($_POST["reset"])) { // если нажата кнопка "Очистити статистику ігор" очистить массивы лога достижений и их цветов
-                    $lastGameStatistics = [];
-                    $gradationByClass = [];
-                    $_SESSION["lastGameStatistics"] = $lastGameStatistics;
-                    $_SESSION["gradationByClass"] = $gradationByClass;
+                    session_destroy();
+                    header("Location: index.php");
                 }
                 // session_destroy();
-                $password = $_SESSION["password"];
+                if (isset($_SESSION["password"])) {
+                    $password = $_SESSION["password"];
+                }
                 $generalStats = ["Ви Оракул!", "Ви Суперекстрасенс!", "Ви Eрекстрасенс!", "Ви майже Екстрасенс.", "Ви не Екстрасенс, співчуваємо."];
                 $achievement_classes = ["class='top_achievement'", "class='high_achievement'", "class='normal_achievement'", "class='low_achievement'", "class='bottom_achievement'"];
                 if (! empty($_SESSION["stats"])) {
@@ -29,12 +29,10 @@
                 if (isset($_POST["choise"])) {
                     $choise = $_POST["choise"];
                     if ($password == $choise) {
-                        echo ("<h2>Правильно, ви вгадали!</h2>");
                         if (! empty($_SESSION["stats"])) {
                             $_SESSION["stats"]["countWins"] = 3;
                         }
                     } else {
-                        echo ("<h2>Невірно, ви не вгадали!</h2>");
                         if (! empty($_SESSION["stats"])) {
                             $_SESSION["stats"]["countWins"] = 0;
                         }
@@ -44,9 +42,7 @@
                     $lastGameStatistics = $_SESSION["lastGameStatistics"];
                     $gradationByClass = $_SESSION["gradationByClass"];
                 } else {
-                    $lastGameStatistics = [];
-                    $gradationByClass = [];
-                    echo ("труляля");
+                    $lastGameStatistics = $gradationByClass = array();
                 }
                 if (isset($_SESSION["password"])) {
                     if (! empty($_SESSION["stats"])) {
@@ -72,32 +68,33 @@
                             $achievement = $generalStats[4];
                             $achievement_class = $achievement_classes[4];
                         }
-                        $_SESSION["stats"] = [];
+                        $_SESSION["stats"] = array();
                         array_push($lastGameStatistics, $achievement);
                         array_push($gradationByClass, $achievement_class);
                         $latestAchievement = $achievement;
                         $lastAchievementСlass = $achievement_class;
                         $_SESSION["latestAchievement"] = $latestAchievement;
                         $_SESSION["lastAchievementСlass"] = $lastAchievementСlass;
-                        // $password = 0;
-                        // $_SESSION["password"] = $password;
+                        unset($_SESSION["password"]);
+                        // header("location: results.php");
                     }
-                    if (! empty($_SESSION["lastGameStatistics"])) {
-                        echo ("<h2>Минулі досягнення:</h2>");
-                        for ($i = 0; $i < (count($lastGameStatistics) - 1); $i++) {
-                            echo ("<p><h3><span " . $gradationByClass[$i] . ">" . $lastGameStatistics[$i] . "</span></h3></p>");
-                        }
-                        echo ("<hr>");
-                        echo ("<p><button class='button' type='submit' name='reset' value='reset'>Очистити статистику ігор</button></p>");
-                    }
-                    $_SESSION["gradationByClass"] = $gradationByClass;
                     $_SESSION["lastGameStatistics"] = $lastGameStatistics;
+                    $_SESSION["gradationByClass"] = $gradationByClass;
                 } else {
                     $latestAchievement = $_SESSION["latestAchievement"];
                     $lastAchievementСlass = $_SESSION["lastAchievementСlass"];
                     echo ("<p><h3><span " . $lastAchievementСlass . ">" . $latestAchievement . "</span></h3></p>");
                 }
-                echo ("<hr>");
+                if (count($lastGameStatistics) > 1) {
+                    echo ("<h2>Минулі досягнення:</h2>");
+                    for ($i = 0; $i < (count($lastGameStatistics) - 1); $i++) {
+                        echo ("<p><h3><span " . $gradationByClass[$i] . ">" . $lastGameStatistics[$i] . "</span></h3></p>");
+                    }
+                    echo ("<hr>");
+                    echo ("<p><button class='button' type='submit' name='reset' value='reset'>Очистити статистику ігор</button></p>");
+                } else {
+                    echo ("<hr>");
+                }
                 echo ("<p><a class='button' href='index.php'>Почати спочатку</a></p>");
             ?>
         </form>
